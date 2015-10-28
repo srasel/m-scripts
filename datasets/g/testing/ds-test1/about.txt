@@ -1,1 +1,0 @@
-This is a dummy dataset to test validaiton of folder and file errors. Things like naming conventions, relative paths and missing ontologies
