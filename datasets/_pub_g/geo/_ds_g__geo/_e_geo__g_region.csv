@@ -1,0 +1,5 @@
+geo,geo.name,geo.short_name,geo.subdim
+asi,Asia,,g_region
+eur,Europe,,g_region
+ame,The Americas,America,g_region
+asi,Asia,,g_region
