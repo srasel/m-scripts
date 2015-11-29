@@ -2,7 +2,7 @@
     Script Name    : Clean latin characters to make it readable.
     Author        : Md. Shahnewaz Rasel
     Input    : will be a 3 columns spreadsheet with a Table name defined as "Source"
-              ideally with one single column. Script will prompt for the name
+              ideally with one single column. Script will prompt for the name 
     Output    : Clean readable words.
     GitHub    : #21
 */
