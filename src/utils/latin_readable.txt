@@ -1,0 +1,41 @@
+(Latin_Column as text)=>
+let
+    SolutionPath = "LocalPath",
+    Source = Excel.Workbook(File.Contents(SolutionPath), null, true),
+    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+    DataTable = Table.PromoteHeaders(Sheet1_Sheet),
+	AccCharsList = "öŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ",
+	RegCharsList = "oSZszYAAAAAACEEEEIIIIDNOOOOOUUUUYaaaaaaceeeeiiiidnooooouuuuyy",
+	SpecialCharsList =", |*()[]",
+	
+	input = Table.RenameColumns(DataTable,{{Latin_Column, "Geocol"}}),
+	
+	replaceFunc = (inText as text, indx as number) as text =>
+	let	
+		AccChar= Text.Range(AccCharsList,indx,1),
+		RegChar= Text.Range(RegCharsList,indx,1),
+		SpecialChar = (
+		        if indx < Text.Length(SpecialCharsList) then 
+		            Text.Range(SpecialCharsList,indx,1)
+				else
+				    ""
+		),
+		latinReplaced = Text.Replace(inText,AccChar,RegChar),
+		finalString = Text.Replace(latinReplaced,SpecialChar,"_")
+	in
+		finalString,
+	CleanLatinChar = [
+ 		Loop = 
+			(inText as text, indx as number) as text=>
+			if indx >= Text.Length(AccCharsList) then
+				inText
+			else 
+				@Loop(replaceFunc(inText,indx),indx+1)
+	],
+	FinalTab = Table.TransformRows(input, each CleanLatinChar[Loop]([Geocol],0)),
+    #"Converted to Table" = Table.FromList(FinalTab, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Lowercased Text" = Table.TransformColumns(#"Converted to Table",{},Text.Lower),
+    ReplaceDoubleUnderscore = Table.ReplaceValue(#"Lowercased Text","__","_",Replacer.ReplaceText,{"Column1"}),
+    Output = Table.RenameColumns(ReplaceDoubleUnderscore,{{"Column1", Latin_Column}})
+in
+    Output
