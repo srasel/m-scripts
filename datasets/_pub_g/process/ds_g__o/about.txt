@@ -1,1 +1,0 @@
-gapminder ontology is defining concepts used to combine data in potluck

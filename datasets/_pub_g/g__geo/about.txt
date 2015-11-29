@@ -1,1 +1,0 @@
-This dataset defines gapminders unifying geographies: identifiers, hierarchies subdivisions, and geo-shapes at different resolutions

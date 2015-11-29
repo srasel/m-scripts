@@ -1,1 +1,0 @@
-The human numbers dataset is the main external dataset from Gapminder.

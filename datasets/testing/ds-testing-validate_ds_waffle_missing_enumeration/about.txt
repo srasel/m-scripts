@@ -1,6 +1,0 @@
-This dataset is intentionaly missing the enumeration of gender, expected from the definition in the concepts table. 
-When a dimensions is defined with e nature entities, the validator should thorow error if it can't find non of:
-a. a file starting --[dimension.id]--
-b. a file called dataset, with a query or table called the dimension id
-
-This example defines a concept called gender, but there's no such table, sheet or table in the dataset.xls file, and there's not file called --gender, either. 
