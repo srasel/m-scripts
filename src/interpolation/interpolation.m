@@ -1,11 +1,21 @@
+/*
+	Script Name	: Interpolate / Extrapolate to find the missing values
+	Author		: Md. Shahnewaz Rasel
+	Input	: will be a 3 columns spreadsheet with a Table name defined as "Source"
+			  ideally columns will be geo, year, indicator_name or geo, age, indicator_name			  
+	Output	: Script output with the necessary columns
+	GitHub	: #08
+*/
 (Ordinal_Column as text, Interpolation_Type as text)=>
 let
 	// Assumption is: Source will be a excel file
-	// with a Sheet name: Table1
-	Source = Excel.CurrentWorkbook(){[Name="Table1"]}[Content],
-    DataTable = Source, //Table.PromoteHeaders(Sheet1_Sheet),
+	// with a Sheet with Table name: Source
+	Source = Excel.CurrentWorkbook(){[Name="Source"]}[Content],
+    DataTable = Source, 
+	// Change the year/age/etc. ordinal column name to common name "ordinalColumn"
+	// to use further.
 	RenameOrdinalColumn = Table.RenameColumns(DataTable,{{Ordinal_Column, "ordinalColumn"}}),
-    CollectDimensionColumns = {"geo","ordinalColumn"}, //{List.Combine({Text.Split(Dimension_Column,","),{"ordinalColumn"}})}{0},
+    CollectDimensionColumns = {"geo","ordinalColumn"}, 
     ListOfAllColumns = Table.ColumnNames(RenameOrdinalColumn),
     IndicatorColumns = List.RemoveMatchingItems(ListOfAllColumns,CollectDimensionColumns),	
     UnpivotedTable = Table.Unpivot(RenameOrdinalColumn,IndicatorColumns,"Attribute","Value"),
