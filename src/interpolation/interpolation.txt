@@ -1,13 +1,10 @@
 (Ordinal_Column as text, Interpolation_Type as text)=>
 let
-
-    SolutionPath = fnGetParameter("Data File"),
-    Source = Excel.Workbook(File.Contents(SolutionPath), null, true),
-    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
-    DataTable = Table.PromoteHeaders(Sheet1_Sheet),
-	
-    //Source = Excel.CurrentWorkbook(){[Name="Table1"]}[Content],
-    RenameOrdinalColumn = Table.RenameColumns(DataTable,{{Ordinal_Column, "ordinalColumn"}}),
+	// Assumption is: Source will be a excel file
+	// with a Sheet name: Table1
+	Source = Excel.CurrentWorkbook(){[Name="Table1"]}[Content],
+    DataTable = Source, //Table.PromoteHeaders(Sheet1_Sheet),
+	RenameOrdinalColumn = Table.RenameColumns(DataTable,{{Ordinal_Column, "ordinalColumn"}}),
     CollectDimensionColumns = {"geo","ordinalColumn"}, //{List.Combine({Text.Split(Dimension_Column,","),{"ordinalColumn"}})}{0},
     ListOfAllColumns = Table.ColumnNames(RenameOrdinalColumn),
     IndicatorColumns = List.RemoveMatchingItems(ListOfAllColumns,CollectDimensionColumns),	
