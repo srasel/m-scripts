@@ -15,9 +15,6 @@ let
     #"Removed Other Columns" = Table.SelectColumns(AddedRank,{"allRows"}),
     #"Expanded allRows" = Table.ExpandTableColumn(#"Removed Other Columns", "allRows", {"geo", "year", "pop", "Rank"}, {"geo", "year", "pop", "Rank"}),
     #"Filtered Rows" = Table.SelectRows(#"Expanded allRows", each ([Rank] = 2)),
-    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Rank"}),
-	renames = List.Transform(
-        Table.ColumnNames(#"Removed Columns"),
-        each {_, Text.Combine(_,",")})
+    Output = Table.RemoveColumns(#"Filtered Rows",{"Rank"})
 in
-    renames
+    Output
