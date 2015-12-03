@@ -1,0 +1,11 @@
+This folder contains human tests used to ensure the scripts perform correctly.
+Create the same subfolder structure as in /scripts/ 
+and for each script, create a folder with the same name with the prefix: "test"
+
+So a script with the path 
+/scripts/procedures/interpolate.m
+
+Will have a human "tests" folder here
+/scripts/procedures/interpolate_tests/
+
+containing files to test this script

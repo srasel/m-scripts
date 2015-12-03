@@ -1,0 +1,10 @@
+The examples folders contains sub foders with examples of how to use the scripts. 
+The examples are linked to from scripts and documentaiotn to show show how to use the various scripts.
+
+So a script with the path 
+/scripts/procedures/interpolate.m
+
+Will have a examples folder here
+/scripts/procedures/interpolate_examples/
+
+containing files for understanding how it works

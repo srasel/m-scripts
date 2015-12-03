@@ -1,0 +1,5 @@
+Scripts are of three kinds.
+\procedures\ - Contains subfolders for steps in transformation sequences, where both input and output are DDF (Data Description Format)
+\importers\ - Contains generic scripts for bringin data into DDF from other formats. (Don't put scripts here which deal with specific datasets.)
+\exporters\ - Contains generic scripts for bringin data from DDF to other formats. (Don't put scripts here which deal with specific datasets.)
+\utils\ - Contain any other script useful for dealing with data in Open Numbers.
